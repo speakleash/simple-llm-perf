@@ -32,13 +32,13 @@ async def generate_completion(
     prompt: str,
     model: str = "gpt-4o",
 ) -> BenchmarkResult:
+    # Count input tokens
+    input_tokens = count_tokens(prompt, model)
+    
     start_time = time.time()
     first_token_received = False
     first_token_time = 0
     token_count = 0
-    
-    # Count input tokens
-    input_tokens = count_tokens(prompt, model)
     
     response = await client.chat.completions.create(
         model=model,
