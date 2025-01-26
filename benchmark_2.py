@@ -45,6 +45,7 @@ async def generate_completion(
         messages=[{"role": "user", "content": prompt}],
         stream=True,
         max_tokens=2000,
+        temperature=0.0,
     )
     
     async for chunk in response:
@@ -119,6 +120,13 @@ async def main():
     client = AsyncOpenAI(
         base_url=args.base_url,
         api_key=args.api_key
+    )
+    
+    # We need to make a request to warm up the client
+    _ = await client.chat.completions.create(
+        model=args.model,
+        messages=[{"role": "user", "content": "Hello, world!"}],
+        temperature=0.0,
     )
 
     # Test prompt that will generate a moderate length response
