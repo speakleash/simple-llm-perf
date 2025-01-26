@@ -45,6 +45,7 @@ async def generate_completion(
         messages=[{"role": "user", "content": prompt}],
         stream=True,
         max_tokens=2000,
+        temperature=0.0,
     )
     
     async for chunk in response:
